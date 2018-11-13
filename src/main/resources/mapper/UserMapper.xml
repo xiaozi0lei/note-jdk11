@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sunguolei.note.mapper.UserMapper">
+
+    <resultMap id="UserMap" type="cn.sunguolei.note.entity.User">
+        <id property="id" column="id"/>
+        <id property="username" column="username"/>
+        <id property="password" column="password"/>
+        <id property="createTime" column="create_time"/>
+        <id property="email" column="email"/>
+        <id property="activateStatus" column="activate_status"/>
+        <id property="activateCode" column="activate_code"/>
+    </resultMap>
+
+    <select id="findUserByUsername" resultMap="UserMap">
+        SELECT *
+        FROM t_user
+        WHERE username = #{username} AND activate_status = 1
+    </select>
+
+    <select id="checkUserByUsername" resultMap="UserMap">
+        SELECT *
+        FROM t_user
+        WHERE username = #{username}
+    </select>
+
+    <select id="index" resultMap="UserMap">
+        SELECT *
+        FROM t_user
+    </select>
+
+    <select id="checkEmail" resultMap="UserMap">
+        SELECT *
+        FROM t_user
+        WHERE email = #{email}
+    </select>
+
+    <insert id="create" parameterType="cn.sunguolei.note.entity.User">
+        INSERT INTO t_user (username, password, create_time, email, activate_code)
+        VALUES (#{username}, #{password}, #{createTime}, #{email}, #{activateCode})
+    </insert>
+
+    <select id="getUserCountByNameActivateStatus" parameterType="cn.sunguolei.note.entity.User"
+            resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM t_user
+        WHERE username = #{username} AND activate_status = #{activateStatus} AND activate_code = #{activateCode}
+    </select>
+
+    <update id="SetUserActivateStatus" parameterType="cn.sunguolei.note.entity.User">
+        UPDATE t_user
+        SET activate_status = #{activateStatus}
+        WHERE username = #{username}
+    </update>
+
+    <update id="SetUserPassword" parameterType="cn.sunguolei.note.entity.User">
+        UPDATE t_user
+        SET password = #{password}
+        WHERE username = #{username}
+    </update>
+
+</mapper>

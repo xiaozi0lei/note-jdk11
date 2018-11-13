@@ -1,0 +1,25 @@
+yingnote:
+  key: wow!@#$%
+  host: http://localhost:8080
+  jwt: 1234567890testJWTs1234567890testJWTs1234567890testJWTs1234567890
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/ying_note?characterEncoding=UTF-8&useSSL=false
+    username: testnote
+    password: Testnote@2018
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    driver-class-name: com.mysql.jdbc.Driver
+
+  mail:
+    host: smtp.163.com
+    username: yingnote_dev@163.com
+    password: dSjal1985ganeL28
+    properties:
+        mail:
+            smtp:
+                auth: true
+                timeout: 25000
+logging:
+  level:
+    cn.sunguolei.note: debug

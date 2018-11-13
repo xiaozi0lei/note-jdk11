@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <h2 th:text="${note.title}" class="center"></h2>
+
+    <div>
+        <a th:href="@{/note/index}">返回列表</a> |
+        <a th:href="@{'/note/edit/'+${note.id}}">编辑</a>
+    </div>
+    <div id="article" style="border: 1px solid green;"></div>
+    <div>
+        <a th:href="@{/note/index}">返回列表</a> |
+        <a th:href="@{'/note/edit/'+${note.id}}">编辑</a>
+    </div>
+
+</div>
+<div layout:fragment="customScript">
+    <script src="/js/markdown.js"></script>
+    <script th:inline="javascript">
+        var content = [[${note.content}]];
+        <!-- 使用 gfm markdown 进行文章渲染 -->
+        var markdown_content = gfmMarkdown(content);
+
+        // 再次用本地的 markdown 解析器
+        if (markdown_content === "error") {
+            markdown_content = markdown.toHTML(content);
+        }
+
+        $("#article").html(markdown_content);
+
+    </script>
+</div>
+</body>
+</html>

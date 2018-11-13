@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" th:text="#{app.name}" href="/">笔记博客</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+
+            <ul class="nav navbar-nav">
+                <li>
+                    <a th:href="@{/note/index}">我的笔记</a>
+                </li>
+            </ul>
+            <!--登录按钮-->
+            <ul class="nav navbar-nav navbar-right">
+                <li id="login">
+                    <a class="btn btn-warning" th:href="@{/toLogin}">登录</a>
+                </li>
+                <li class="dropdown" id="userDomain" style="display: none">
+                    <a href="#" class="btn btn-success" data-toggle="dropdown">
+                        <span id="login_name" style="color: white;">用户名</span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a href="/user/index">用户管理</a>
+                        </li>
+                        <li>
+                            <a href="/user/personIndex">密码修改</a>
+                        </li>
+                        <li>
+                            <a href="/user/toLogout">退出</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

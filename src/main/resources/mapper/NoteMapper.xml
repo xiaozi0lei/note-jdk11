@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sunguolei.note.mapper.NoteMapper">
+
+    <resultMap id="noteMap" type="cn.sunguolei.note.entity.Note">
+        <id property="id" column="id"/>
+        <id property="title" column="title"/>
+        <id property="content" column="content"/>
+        <id property="createTime" column="create_time"/>
+        <id property="clickNumber" column="click_number"/>
+        <id property="userId" column="user_id"/>
+        <id property="username" column="username"/>
+        <id property="type" column="type"/>
+    </resultMap>
+
+    <select id="listAll" resultMap="noteMap">
+        SELECT *
+        FROM t_note;
+    </select>
+    <!--<resultMap id="NoteWithUserMap" type="cn.sunguolei.note.domain.NoteWithUser">-->
+    <!--<id property="id" column="id"/>-->
+    <!--<id property="title" column="title"/>-->
+    <!--<id property="createTime" column="create_time"/>-->
+    <!--<id property="username" column="username"/>-->
+    <!--</resultMap>-->
+
+    <select id="index" resultMap="noteMap" parameterType="int">
+        SELECT *
+        FROM t_note
+        WHERE user_id = #{id}
+        ORDER BY create_time DESC
+    </select>
+
+    <select id="homeNoteList" resultMap="noteMap">
+        SELECT n.id, n.title, n.create_time, u.username
+        FROM t_note AS n
+                 LEFT JOIN t_user AS u ON n.user_id = u.id
+        WHERE n.type = 0
+        ORDER BY create_time DESC
+    </select>
+
+    <insert id="create" parameterType="cn.sunguolei.note.entity.Note">
+        INSERT INTO t_note (title, content, create_time, click_number, user_id, type)
+        VALUES (#{title}, #{content}, #{createTime}, #{clickNumber}, #{userId}, #{type})
+    </insert>
+
+    <select id="findNoteById" resultType="cn.sunguolei.note.entity.Note" parameterType="int">
+        SELECT *
+        FROM t_note
+        WHERE id = #{id}
+    </select>
+
+    <update id="update" parameterType="cn.sunguolei.note.entity.Note">
+        UPDATE t_note
+        <set>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="click_number != null and click_number != ''">
+                click_number = #{clickNumber},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+</mapper>

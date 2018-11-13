@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <form th:action="@{/user/create}" method="post">
+        <div class="form-group">
+            <div th:text="${msg}" class="alert alert-info" role="alert">
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <label for="email">邮箱</label>
+                    <input class="form-control" id="email" name="email" placeholder="请输入邮箱,需要通过邮箱激活账号"/>
+                    <label for="username">用户名</label>
+                    <input class="form-control" id="username" name="username" placeholder="请输入用户名"/>
+                    <label for="password">密码</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码"/>
+                    <label for="ConfirmPassword">确认密码</label>
+                    <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword"
+                           placeholder="请输入确认密码"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-md-offset-5">
+            <button type="submit" class="btn btn-primary" id="register" style="width:80px;">注册
+            </button>
+        </div>
+    </form>
+</div>
+<div layout:fragment="customScript">
+    <script type="text/javascript" src="/js/register.js"></script>
+</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <form th:action="@{/user/update}" method="post">
+        <div class="form-group">
+            <div th:text="${msg}" class="alert alert-info" role="alert">
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <label for="OldPassword">原密码</label>
+                    <input type="password" class="form-control" id="OldPassword" name="OldPassword" placeholder="请输入原密码"/>
+                    <label for="NewPassword">新密码</label>
+                    <input type="password" class="form-control" id="NewPassword" name="NewPassword" placeholder="请输入新密码"/>
+                    <label for="ConfirmNewPassword">确认新密码</label>
+                    <input type="password" class="form-control" id="ConfirmNewPassword" name="ConfirmNewPassword"
+                           placeholder="请确认新密码"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-md-offset-5">
+            <button type="submit" class="btn btn-primary" id="ModifyPassword" style="width:80px;">修改密码
+            </button>
+        </div>
+    </form>
+</div>
+<div layout:fragment="customScript">
+    <script type="text/javascript" src="/js/modifyPwd.js"></script>
+</div>
+</body>
+</html>

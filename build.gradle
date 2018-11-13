@@ -1,0 +1,51 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.0.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'cn.sunguolei'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 11
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	implementation('org.springframework.boot:spring-boot-starter-data-redis')
+	implementation('org.springframework.boot:spring-boot-starter-jdbc')
+	implementation('org.springframework.boot:spring-boot-starter-mail')
+	implementation('org.springframework.boot:spring-boot-starter-security')
+	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+	implementation('org.springframework.boot:spring-boot-starter-web')
+	implementation('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')
+	runtimeOnly('mysql:mysql-connector-java')
+	compileOnly('org.projectlombok:lombok')
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	testImplementation('org.springframework.security:spring-security-test')
+
+    // jwt 验证授权
+    compile 'io.jsonwebtoken:jjwt-api:0.10.5'
+    runtime 'io.jsonwebtoken:jjwt-impl:0.10.5', 'io.jsonwebtoken:jjwt-jackson:0.10.5'
+
+	// thymeleaf 模板布局方言 layout dialect
+	compile('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
+
+	// 前端支持 Java8 LocalDateTime
+	compile("org.thymeleaf.extras:thymeleaf-extras-java8time")
+	// MyBatis 分页插件
+	compile('com.github.pagehelper:pagehelper-spring-boot-starter:1.2.10')
+}

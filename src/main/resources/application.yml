@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: front
+
+  profiles:
+    #    active: prod
+    active: dev
+
+  mvc:
+    favicon:
+      enabled: false
+  messages:
+    basename: message/messages
+    encoding: utf-8
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: cn.sunguolei.note.entity
+  configuration:
+    map-underscore-to-camel-case: true

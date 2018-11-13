@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="content">
+    <h2><a class="btn btn-primary" href="/note/add">新增用户</a></h2>
+    <table class="table table-striped table-bordered content">
+        <thead>
+        <tr>
+            <th>用户名</th>
+            <th>邮箱</th>
+            <th>激活状态</th>
+            <th>创建时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user:${userList}">
+            <td th:text="${user.id}" hidden>ID：id</td>
+            <td th:text="${user.username}">用户名</td>
+            <td th:text="${user.email}">邮箱</td>
+            <td th:text="${user.activateStatus == 1 ?'激活':'未激活'}">激活状态</td>
+            <td th:text="${user.createTime}">创建时间</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div layout:fragment="customScript">
+</div>
+</body>
+</html>

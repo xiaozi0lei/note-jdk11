@@ -1,22 +1,22 @@
 package cn.sunguolei.note.controller;
 
 import cn.sunguolei.note.entity.Note;
+import cn.sunguolei.note.entity.ReturnResult;
 import cn.sunguolei.note.entity.User;
 import cn.sunguolei.note.service.NoteService;
 import cn.sunguolei.note.service.UserService;
 import cn.sunguolei.note.utils.UserUtil;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -215,5 +215,23 @@ public class NoteController {
         model.addAttribute("noteList", noteList);
         model.addAttribute("keyword", keyword);
         return "note/index";
+    }
+
+    /**
+     * 笔记的列表页，默认加载登录用户的笔记
+     *
+     * @return 笔记列表页
+     */
+    @GetMapping("/indexJson")
+    @ResponseBody
+    public ReturnResult indexJson(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                  @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+
+        ReturnResult<PageInfo<Note>> result = new ReturnResult<>();
+        // 通过用户 id 查找对应的用户的笔记
+        var noteList = noteService.homeNoteList(pageNum, pageSize);
+        result.setData(noteList);
+
+        return result;
     }
 }

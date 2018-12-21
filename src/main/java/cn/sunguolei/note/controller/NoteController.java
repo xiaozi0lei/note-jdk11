@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -147,7 +149,6 @@ public class NoteController {
         } else {
             return "redirect:/note/index";
         }
-
     }
 
     /**
@@ -233,5 +234,50 @@ public class NoteController {
         result.setData(noteList);
 
         return result;
+    }
+
+    /**
+     * 根据ID打开笔记页面
+     *
+     * @return 返回对应页面
+     */
+    @GetMapping("/viewJson/{id}")
+    @ResponseBody
+    public ReturnResult view(@PathVariable("id") int id, HttpServletResponse response) {
+        Optional<Note> noteTemp = Optional.ofNullable(noteService.findNoteById(id));
+        ReturnResult<String> result = new ReturnResult<>();
+        if (noteTemp.isPresent()) {
+            Note note = noteTemp.get();
+            // 如果笔记是隐藏的
+//            if (note.getType() == 1) {
+//                User user = (User) SecurityContextHolder.getContext()
+//                        .getAuthentication()
+//                        .getPrincipal();
+//                if (user == null) {
+//                    return "redirect:/toLogin";
+//                } else {
+//                    // 当前登录的用户 ID
+//                    int userId = user.getId();
+//                    // 笔记中记录的创建者的 ID
+//                    int noteUserId = note.getUserId();
+//                    // 只有两者相等才能查看笔记
+//                    if (userId != noteUserId) {
+//                        return "redirect:/note/index";
+//                    }
+//                }
+//            }
+            result.setData(note.getContent());
+            return result;
+        } else {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json;charset=UTF-8");
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            try {
+                response.getWriter().print("error");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }

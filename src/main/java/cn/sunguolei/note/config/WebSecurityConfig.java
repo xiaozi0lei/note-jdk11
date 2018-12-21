@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 除了 login 其它接口都需要验证
                 .antMatchers("/", "/toLogin", "/login",
                         // test
-                        "/note/indexJson",
+//                        "/note/indexJson",
                         "/user/add", "/user/create", "/user/activeUser",
                         // 允许查看公开的笔记，公开的工具
                         "/note/view/**", "/tool/jsonToParam",
